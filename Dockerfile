@@ -12,8 +12,6 @@ RUN mkdir -p /opt/sonatype/nexus \
     && mv /tmp/nexus-${NEXUS_VERSION}/* /opt/sonatype/nexus/ \
     && rm -rf /tmp/nexus-${NEXUS_VERSION}
 
-RUN useradd -r -u 200 -m -c "nexus role account" -d ${NEXUS_DATA} -s /bin/false nexus
-
 # configure nexus runtime env
 RUN sed -e "s|KARAF_HOME}/instances|KARAF_DATA}/instances|" -i /opt/sonatype/nexus/bin/nexus
 
@@ -22,7 +20,6 @@ VOLUME ${NEXUS_DATA}
 
 EXPOSE 8081
 WORKDIR /opt/sonatype/nexus
-USER nexus
 ENV KARAF_BASE /opt/sonatype/nexus
 ENV KARAF_DATA ${NEXUS_DATA}
 ENV KARAF_ETC ${KARAF_BASE}/etc
